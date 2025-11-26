@@ -44,13 +44,16 @@ void insertionSort(Var (&array)[Dim])
 {
     for(size_t i = 1; i < Dim; i++) //iterates through the array starting from the second element
     {
-        size_t j = array[i - 1]; //sets the counter j for the while loop with the value == array[i - 1]
+        Var key = array[i];
+        size_t j = i ; //sets the counter j for the while loop with the value = i 
 
-            while((i > 0) and (array[j] > array[i])) //if the condition (i > 0) and (array[j] > array[i]) is met, it enters the loop and swaps the elements array[i - 1],array[i], decrement j
+            while((j > 0) and (array[j - 1] > key )) //if the condition (j > 0) and (array[j - 1] > key ) is met, it enters the loop and swaps the elements array[i - 1],array[i], decrement j
             {
-                std::swap(array[i - 1],array[i]);
+                array[j] = array[j - 1];
                 j--; 
             }
+
+        array[j] = key;    
     }
 }
 
@@ -63,19 +66,19 @@ void insertionSort(Var (&array)[Dim])
 template<typename Var, size_t Dim>
 void selectionSort(Var (&array)[Dim]) 
 {
-    for(size_t i = 0;i < Dim - 1;i++) //iterates through the array up to the second-to-last element
+    for(size_t i = 0;i < Dim - 1;i++) //iterates through the array and swap array[i],array[min]
     {
-        size_t min = i; //sets the min to the value of the counter i
+        size_t minIndex = i; //sets the min to the value of the counter i
         
-        for(size_t j = i + 1; j < Dim; j++) //starting from index i + 1, if array[i] >  array[i + 1] is met then min = j and swap array[min],array[i] otherwise swap array[min],array[i]”
+        for(size_t j = i + 1; j < Dim; j++) //If array[j] <  array[minIndex] min is set to the value of the counter j
         {
-            if(array[i] >  array[i + 1])
+            if(array[j] <  array[minIndex])
             {
-                min = j;
+                minIndex = j;
             }
-  
-            std::swap(array[min],array[i]);
         }
+
+        std::swap(array[i],array[minIndex]);
     } 
 }
 
@@ -91,14 +94,13 @@ void shellSort(Var (&array)[Dim])
 
     for(size_t gap = Dim/2;gap > 0; gap /= 2) //It iterates through the array starting from a gap equal to dim/2, and each time the gap is halved
     {
-        for(size_t i = gap + 1; i < Dim;i++) //As long as the condition (i < Dim) && (array[j] > array[j + gap]) is true, it swaps array[j],array[i]
+        for(size_t i = gap; i < Dim;i++) 
         {
-            for(size_t j = i - gap; (i < Dim) && (array[j] > array[j + gap]);j - gap)
+            for(size_t j = i; (j >= gap) && (array[j - gap] > array[j]);j -= gap)
             {
-                std::swap(array[j],array[i]);
+                std::swap(array[j],array[j - gap]);
             }
         }
-   
     }  
 }
 
