@@ -23,13 +23,19 @@ void bubbleSort(Var (&array)[Dim])
 {
     for(size_t i = 0;i < Dim - 1;i++) //terates through the array
     {
+        bool early_exit = false; 
+
         for(size_t j = 0;j < Dim - i - 1;j++) //compares and swaps pairs of elements
         {
             if(array[j] > array[j + 1])
             {
                 std::swap(array[j],array[j + 1]);
+                early_exit = true;
             }
         }
+
+        if(early_exit == false) //If no swap occurred the array is already sorted
+        break;
     }
 }
 
